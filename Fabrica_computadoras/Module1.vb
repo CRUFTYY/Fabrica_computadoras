@@ -11,20 +11,23 @@
             0- Salir
             ")
             opcion = Char.Parse(Console.ReadLine())
-
+            Console.Clear()
             Select Case opcion
                 Case "1"
                     Dim computadora As New Computadora()
                     computadora.IngresarDatos()
                     Console.WriteLine("El precio de la computadora es: $" & computadora.Precio())
                 Case "2"
-                    'Dim notebook As New Notebook()
-                    'notebook.IngresarDatos()
-                    'Console.WriteLine("El precio de la notebook es: $" & notebook.Precio())
+                    Dim netebook As New Netebook()
+                    netebook.IngresarDatos()
+                    Console.WriteLine("El precio de la notebook es: $" & netebook.Precio())
                 Case "3"
-                    'Dim gamer As New NoteGamer()
-                    'gamer.IngresarDatos()
-                    'Console.WriteLine("El precio de la notebook gamer es: $" & gamer.Precio())
+                    Dim gamer As New NoteGamer()
+                    gamer.IngresarDatos()
+                    Console.WriteLine("El precio de la notebook gamer es: $" & gamer.Precio())
+                Case "0"
+                    Console.WriteLine("Saliendo...")
+                    Exit Do
                 Case Else
                     Console.WriteLine("Opcion inválida")
             End Select

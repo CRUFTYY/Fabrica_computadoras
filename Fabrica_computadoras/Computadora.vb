@@ -74,7 +74,7 @@
         Do
             Console.Write("Ingrese CPU (I para Intel, A para AMD): ")
             Dim input As Char = Char.ToUpper(Convert.ToChar(Console.ReadLine()))
-            If input = "I"c OrElse input = "A"c Then
+            If input = "I" OrElse input = "A" Then
                 Cpu = input
                 Exit Do
             Else
@@ -111,7 +111,7 @@
         Dim precioBase As Integer
         If Cpu = "I" Then
             precioBase = Intel
-        Else
+        ElseIf Cpu = "A" Then
             precioBase = AMD
         End If
 

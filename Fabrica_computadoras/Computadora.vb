@@ -24,7 +24,18 @@
             End If
         End Set
     End Property
-
+    Public Property GetMemoria() As Integer
+        Get
+            Return Memoria_ram
+        End Get
+        Set(value As Integer)
+            If value >= 8 AndAlso value <= 64 Then
+                Memoria_ram = value
+            Else
+                Throw New ArgumentException("La memoria debe estar entre 8 y 64 GB.")
+            End If
+        End Set
+    End Property
     Public Property GetCpu() As String
         Get
             Return Cpu
@@ -47,17 +58,53 @@
     End Property
 
     Public Sub IngresarDatos()
-        Console.Write("Ingrese el modelo (max 10 caracteres): ")
-        Modelo = Console.ReadLine()
+        ' modelo
+        Do
+            Console.Write("Ingrese el modelo (máx 10 caracteres): ")
+            Dim input As String = Console.ReadLine()
+            If input.Length <= 10 Then
+                Modelo = input
+                Exit Do
+            Else
+                Console.WriteLine("Error: El modelo no puede tener más de 10 caracteres.")
+            End If
+        Loop
 
-        Console.Write("Ingrese CPU (I para Intel, A para AMD): ")
-        Cpu = Convert.ToChar(Console.ReadLine())
+        ' CPU
+        Do
+            Console.Write("Ingrese CPU (I para Intel, A para AMD): ")
+            Dim input As Char = Char.ToUpper(Convert.ToChar(Console.ReadLine()))
+            If input = "I"c OrElse input = "A"c Then
+                Cpu = input
+                Exit Do
+            Else
+                Console.WriteLine("Error: CPU debe ser 'I' para Intel o 'A' para AMD.")
+            End If
+        Loop
 
-        Console.Write("Ingrese cantidad de Memoria RAM (8 a 64 GB): ")
-        Memoria_ram = Convert.ToInt32(Console.ReadLine())
+        '  RAM
+        Do
+            Console.Write("Ingrese cantidad de Memoria RAM (8 a 64 GB): ")
+            Dim input As Integer = Convert.ToInt32(Console.ReadLine())
+            If input >= 8 AndAlso input <= 64 Then
+                Memoria_ram = input
+                Exit Do
+            Else
+                Console.WriteLine("Error: La memoria debe estar entre 8 y 64 GB.")
+            End If
+        Loop
 
-        Console.Write("Ingrese capacidad de Disco (en GB): ")
-        Disco = Convert.ToInt32(Console.ReadLine())
+        ' Disco
+        Do
+            Console.Write("Ingrese capacidad de Disco (en GB): ")
+            Dim input As Integer = Convert.ToInt32(Console.ReadLine())
+            If input > 0 Then
+                Disco = input
+                Exit Do
+            Else
+                Console.WriteLine("Error: La capacidad del disco debe ser un valor positivo.")
+            End If
+        Loop
     End Sub
 
     Public Function Precio() As Integer

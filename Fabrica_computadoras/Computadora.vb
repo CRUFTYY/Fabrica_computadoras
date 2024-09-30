@@ -62,12 +62,9 @@
         Do
             Console.Write("Ingrese el modelo (máx 10 caracteres): ")
             Dim input As String = Console.ReadLine()
-            If input.Length <= 10 Then
-                Modelo = input
-                Exit Do
-            Else
-                Console.WriteLine("Error: El modelo no puede tener más de 10 caracteres.")
-            End If
+            Modelo = Left(input, 10)
+            Exit Do
+
         Loop
 
         ' CPU

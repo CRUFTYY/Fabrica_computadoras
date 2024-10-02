@@ -1,28 +1,33 @@
 ﻿Public Class NoteGamer
-    Inherits Netebook
-    Private Memoria_video As Short
+    Inherits Notebook
 
-    Public Property GetMemoria_video() As Short
+    ' Atributo 
+    Private memVideo As Short
+
+    '  Memoria de Video
+    Public Property GetMemVideo() As Short
         Get
-            Return Memoria_video
+            Return memVideo
         End Get
         Set(value As Short)
-            Memoria_video = value
+            If value >= 0 Then
+                memVideo = value
+            Else
+                Throw New ArgumentException("La memoria de video debe ser un valor no negativo.")
+            End If
         End Set
     End Property
-    Public Sub IngresarDatos()
-        MyBase.IngresarDatos()
 
-        Console.Write("Ingrese memoria de video dedicada (en GB): ")
-        Memoria_video = Integer.Parse(Console.ReadLine())
-
+    ' Constructor
+    Public Sub New(modelo As String, cpu As Char, memoria As Integer, disco As Integer, pantalla As Short, bateria As Short, memVideo As Short)
+        MyBase.New(modelo, cpu, memoria, disco, pantalla, bateria)
+        Me.GetMemVideo = memVideo
     End Sub
 
-    Public Function Precio() As Integer
-        Dim precioBase As Integer = MyBase.Precio()
-        precioBase += Memoria_video * GigaVideo
-
-        Return precioBase
+    ' Método Precio
+    Public Overrides Function Precio() As Integer
+        Dim PrecioBase As Integer = MyBase.Precio()
+        Precio += memVideo * 10 '
+        Return precio
     End Function
-
 End Class

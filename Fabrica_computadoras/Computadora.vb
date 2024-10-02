@@ -1,122 +1,85 @@
 ﻿Public Class Computadora
+    ' Constantes 
     Public Const Intel As Short = 10000
     Public Const AMD As Short = 9000
     Public Const GigaRAM As Short = 50
     Public Const GigaDisco As Short = 5
-    Public Const Pulgada As Short = 30
-    Public Const HoraBat As Short = 5
-    Public Const GigaVideo As Short = 10
 
-    Private Modelo As String
-    Private Cpu As Char
-    Private Memoria_ram As Integer
-    Private Disco As Integer
+    ' Atributos 
+    Private modelo As String
+    Private cpu As Char
+    Private memoria As Integer
+    Private disco As Integer
 
+    ' Modelo
     Public Property GetModelo() As String
         Get
-            Return Modelo
+            Return modelo
         End Get
         Set(value As String)
             If value.Length <= 10 Then
-                Modelo = value
+                modelo = value
             Else
-                Throw New ArgumentException("El modelo no puede tener más de 10 caracteres")
+                Throw New ArgumentException("El modelo no puede tener más de 10 caracteres.")
             End If
         End Set
     End Property
-    Public Property GetMemoria() As Integer
+
+    '  CPU
+    Public Property GetCpu() As Char
         Get
-            Return Memoria_ram
+            Return cpu
         End Get
-        Set(value As Integer)
-            If value >= 8 AndAlso value <= 64 Then
-                Memoria_ram = value
-            Else
-                Throw New ArgumentException("La memoria debe estar entre 8 y 64 GB.")
-            End If
-        End Set
-    End Property
-    Public Property GetCpu() As String
-        Get
-            Return Cpu
-        End Get
-        Set(value As String)
+        Set(value As Char)
             If value = "I" OrElse value = "A" Then
-                Cpu = Char.ToUpper(value)
+                cpu = Char.ToUpper(value)
             Else
                 Throw New ArgumentException("CPU debe ser 'I' para Intel o 'A' para AMD.")
             End If
         End Set
     End Property
-    Public Property GetDisco() As Integer
+
+    '  Memoria
+    Public Property GetMemoria() As Integer
         Get
-            Return Disco
+            Return memoria
         End Get
         Set(value As Integer)
-            Disco = value
+            If value >= 8 AndAlso value <= 64 Then
+                memoria = value
+            Else
+                Throw New ArgumentException("La memoria debe estar entre 8 y 64 GB.")
+            End If
         End Set
     End Property
 
-    Public Sub IngresarDatos()
-        ' modelo
-        Do
-            Console.Write("Ingrese el modelo (máx 10 caracteres): ")
-            Dim input As String = Console.ReadLine()
-            Modelo = Left(input, 10)
-            Exit Do
-
-        Loop
-
-        ' CPU
-        Do
-            Console.Write("Ingrese CPU (I para Intel, A para AMD): ")
-            Dim input As Char = Char.ToUpper(Convert.ToChar(Console.ReadLine()))
-            If input = "I" OrElse input = "A" Then
-                Cpu = input
-                Exit Do
+    '  Disco
+    Public Property GetDisco() As Integer
+        Get
+            Return disco
+        End Get
+        Set(value As Integer)
+            If value > 0 Then
+                disco = value
             Else
-                Console.WriteLine("Error: CPU debe ser 'I' para Intel o 'A' para AMD.")
+                Throw New ArgumentException("La capacidad del disco debe ser un valor positivo.")
             End If
-        Loop
+        End Set
+    End Property
 
-        '  RAM
-        Do
-            Console.Write("Ingrese cantidad de Memoria RAM (8 a 64 GB): ")
-            Dim input As Integer = Convert.ToInt32(Console.ReadLine())
-            If input >= 8 AndAlso input <= 64 Then
-                Memoria_ram = input
-                Exit Do
-            Else
-                Console.WriteLine("Error: La memoria debe estar entre 8 y 64 GB.")
-            End If
-        Loop
-
-        ' Disco
-        Do
-            Console.Write("Ingrese capacidad de Disco (en GB): ")
-            Dim input As Integer = Convert.ToInt32(Console.ReadLine())
-            If input > 0 Then
-                Disco = input
-                Exit Do
-            Else
-                Console.WriteLine("Error: La capacidad del disco debe ser un valor positivo.")
-            End If
-        Loop
+    ' Constructor
+    Public Sub New(modelo As String, cpu As Char, memoria As Integer, disco As Integer)
+        Me.GetModelo = modelo
+        Me.GetCpu = cpu
+        Me.GetMemoria = memoria
+        Me.GetDisco = disco
     End Sub
 
-    Public Function Precio() As Integer
-        Dim precioBase As Integer
-        If Cpu = "I" Then
-            precioBase = Intel
-        ElseIf Cpu = "A" Then
-            precioBase = AMD
-        End If
-
-        precioBase += Memoria_ram * GigaRAM
-        precioBase += Disco * GigaDisco
-
-
+    ' Precio
+    Public Overridable Function Precio() As Integer
+        Dim precioBase As Integer = If(cpu = "I", Intel, AMD)
+        precioBase += memoria * GigaRAM
+        precioBase += disco * GigaDisco
         Return precioBase
     End Function
-
 End Class

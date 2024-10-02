@@ -1,40 +1,50 @@
-﻿Public Class Netebook
+﻿Public Class Notebook
     Inherits Computadora
-    Private Pantalla As Short
-    Private Bateria As Short
 
+    ' Atributos 
+    Private pantalla As Short
+    Private bateria As Short
+
+    '  Pantalla
     Public Property GetPantalla() As Short
         Get
-            Return Pantalla
+            Return pantalla
         End Get
         Set(value As Short)
-            Pantalla = value
+            If value > 0 Then
+                pantalla = value
+            Else
+                Throw New ArgumentException("La pantalla debe ser mayor a 0 pulgadas.")
+            End If
         End Set
     End Property
 
+    '  Batería
     Public Property GetBateria() As Short
         Get
-            Return Bateria
+            Return bateria
         End Get
         Set(value As Short)
-            Bateria = value
+            If value > 0 Then
+                bateria = value
+            Else
+                Throw New ArgumentException("La batería debe ser mayor a 0 horas.")
+            End If
         End Set
     End Property
 
-    Public Sub IngresarDatos()
-        MyBase.IngresarDatos()
-        Console.Write("Ingrese tamaño de pantalla (en pulgadas): ")
-        Pantalla = Integer.Parse(Console.ReadLine())
-        Console.Write("Ingrese autonomía de batería (en horas): ")
-        Bateria = Integer.Parse(Console.ReadLine())
+    ' Constructor
+    Public Sub New(modelo As String, cpu As Char, memoria As Integer, disco As Integer, pantalla As Short, bateria As Short)
+        MyBase.New(modelo, cpu, memoria, disco)
+        Me.GetPantalla = pantalla
+        Me.GetBateria = bateria
     End Sub
-    Public Function Precio() As Integer
-        Dim precioBase As Integer = MyBase.Precio()
 
-        precioBase += Pantalla * Pulgada
-        precioBase += Bateria * HoraBat
-
-
-        Return precioBase
+    '  Precio
+    Public Overrides Function Precio() As Integer
+        Dim PrecioBase As Integer = MyBase.Precio()
+        Precio += pantalla * 30 ' 
+        Precio += bateria * 5    ' 
+        Return precio
     End Function
 End Class

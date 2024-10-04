@@ -1,5 +1,6 @@
 ﻿Public Class NoteGamer
     Inherits Notebook
+    Public Const GigaVideo As Short = 10
 
     ' Atributo 
     Private memVideo As Short
@@ -27,7 +28,8 @@
     ' Método Precio
     Public Overrides Function Precio() As Integer
         Dim PrecioBase As Integer = MyBase.Precio()
-        Precio += memVideo * 10 '
-        Return precio
+        Precio = PrecioBase
+        PrecioBase += memVideo * GigaVideo '
+        Return Precio
     End Function
 End Class

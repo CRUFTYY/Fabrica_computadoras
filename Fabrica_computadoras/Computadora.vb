@@ -5,6 +5,9 @@
     Public Const GigaRAM As Short = 50
     Public Const GigaDisco As Short = 5
 
+    Public Const RAM_minimo As Short = 8
+    Public Const RAM_maximo As Short = 64
+
     ' Atributos 
     Private modelo As String
     Private cpu As Char
@@ -45,7 +48,7 @@
             Return memoria
         End Get
         Set(value As Integer)
-            If value >= 8 AndAlso value <= 64 Then
+            If value >= RAM_minimo AndAlso value <= RAM_maximo Then
                 memoria = value
             Else
                 Throw New ArgumentException("La memoria debe estar entre 8 y 64 GB.")
@@ -78,8 +81,9 @@
     ' Precio
     Public Overridable Function Precio() As Integer
         Dim precioBase As Integer = If(cpu = "I", Intel, AMD)
-        precioBase += memoria * GigaRAM
-        precioBase += disco * GigaDisco
-        Return precioBase
+        Precio = precioBase
+        Precio += memoria * GigaRAM
+        Precio += disco * GigaDisco
+        Return Precio
     End Function
 End Class

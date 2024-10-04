@@ -1,6 +1,10 @@
 ﻿Public Class Notebook
     Inherits Computadora
 
+    Public Const Pulgada As Short = 30
+    Public Const HoraBateria As Short = 5
+
+
     ' Atributos 
     Private pantalla As Short
     Private bateria As Short
@@ -43,8 +47,9 @@
     '  Precio
     Public Overrides Function Precio() As Integer
         Dim PrecioBase As Integer = MyBase.Precio()
-        Precio += pantalla * 30 ' 
-        Precio += bateria * 5    ' 
-        Return precio
+        Precio = PrecioBase
+        Precio += pantalla * Pulgada ' 
+        Precio += bateria * HoraBateria    ' 
+        Return Precio
     End Function
 End Class
